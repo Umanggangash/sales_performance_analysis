@@ -1,0 +1,28 @@
+import pandas as pd
+import numpy as np
+from faker import Faker
+
+fake = Faker()
+
+rows = 1000
+
+data = {
+    "Student_ID": range(1, rows+1),
+    "Student_Name": [fake.name() for _ in range(rows)],
+    "Gender": np.random.choice(["Male","Female"], rows),
+    "Age": np.random.randint(17,23,rows),
+    "Department": np.random.choice(["CSE","IT","ECE","BBA","MBA"], rows),
+    "Semester": np.random.randint(1,8,rows),
+    "Attendance": np.random.randint(60,100,rows),
+    "Assignment_Score": np.random.randint(40,100,rows),
+    "Midterm_Score": np.random.randint(40,100,rows),
+    "Final_Score": np.random.randint(40,100,rows)
+}
+
+df = pd.DataFrame(data)
+
+df["Average_Score"] = (df["Assignment_Score"] + df["Midterm_Score"] + df["Final_Score"]) / 3
+
+df.to_csv("student_performance.csv", index=False)
+
+print("Dataset Created Successfully!")
